@@ -50,4 +50,11 @@ public class PatientService {
         Patient updatedPatient = patientRepository.save(existingPatient);
         return new PatientResponse(updatedPatient);
     }
+
+    public void deletePatient(UUID id) {
+        if (!patientRepository.existsById(id)) {
+            throw new PatientNotFoundException();
+        }
+        patientRepository.deleteById(id);
+    }
 }
