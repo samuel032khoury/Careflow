@@ -15,6 +15,7 @@ services:
   
   patient-service:
     build: .
+    image: patient-service:latest
     container_name: patient-service-app
     ports:
       - "4000:4000"

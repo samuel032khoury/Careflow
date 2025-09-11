@@ -37,12 +37,26 @@
 			<version>4.31.1</version>
 		</dependency>
 
+		
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>2.1.0-alpha1</version>
+			<type>pom</type>
+		</dependency>
 
 		<dependency>
 			<groupId>org.apache.tomcat</groupId>
 			<artifactId>annotations-api</artifactId>
 			<version>6.0.53</version>
 			<scope>provided</scope>
+		</dependency>
+
+		
+		<dependency>
+			<groupId>net.devh</groupId>
+			<artifactId>grpc-spring-boot-starter</artifactId>
+			<version>3.1.0.RELEASE</version>
 		</dependency>
 
 
