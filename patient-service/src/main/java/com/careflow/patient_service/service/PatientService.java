@@ -10,6 +10,7 @@ import com.careflow.patient_service.dto.patient.PatientRequest;
 import com.careflow.patient_service.dto.patient.PatientResponse;
 import com.careflow.patient_service.exception.EmailAlreadyExistsException;
 import com.careflow.patient_service.exception.PatientNotFoundException;
+import com.careflow.patient_service.grpc.BillingServiceGrpcClient;
 import com.careflow.patient_service.model.Patient;
 import com.careflow.patient_service.repository.PatientRepository;
 
@@ -20,6 +21,7 @@ import lombok.AllArgsConstructor;
 public class PatientService {
 
     private final PatientRepository patientRepository;
+    private final BillingServiceGrpcClient billingServiceGrpcClient;
 
     public List<PatientResponse> getAllPatients() {
         return patientRepository.findAll().stream()
@@ -33,6 +35,8 @@ public class PatientService {
                     "A patient with this email already exists: " + patientRequest.getEmail());
         }
         Patient patient = patientRepository.save(patientRequest.toEntity());
+        billingServiceGrpcClient.createBillingAccount(patient.getId().toString(), patient.getName(),
+                patient.getEmail());
         return new PatientResponse(patient);
     }
 
