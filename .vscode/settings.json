@@ -6,5 +6,9 @@
         "temurin",
         "xolstice"
     ],
-    "java.configuration.updateBuildConfiguration": "automatic"
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "java.project.sourcePaths": [
+        "src/main/java",
+        "target/generated-sources/protobuf/java"
+    ]
 }
