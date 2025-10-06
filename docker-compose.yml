@@ -9,10 +9,10 @@ services:
     ports:
       - "5433:5432"
     volumes:
-      - /Users/samuel/db_volumn/patient_service:/var/lib/postgresql/data
+      - patient-service-data:/var/lib/postgresql
     networks:
-      - internal
-  
+      - careflow-network
+
   patient-service-app:
     build: ./patient-service
     image: patient-service:latest
@@ -26,18 +26,18 @@ services:
     depends_on:
       - patient-service-db
     networks:
-      - internal
+      - careflow-network
 
   billing-service:
-      build: ./billing-service
-      image: billing-service:latest
-      container_name: billing-service-app
-      ports:
-        - "4001:4001"
-        - "9001:9001"
-      networks:
-        - internal
-  
+    build: ./billing-service
+    image: billing-service:latest
+    container_name: billing-service-app
+    ports:
+      - "4001:4001"
+      - "9001:9001"
+    networks:
+      - careflow-network
+
   kafka:
     image: bitnami/kafka:latest
     container_name: kafka
@@ -53,9 +53,13 @@ services:
       KAFKA_CFG_NODE_ID: 0
       KAFKA_CFG_PROCESS_ROLES: controller,broker
     networks:
-      - internal
+      - careflow-network
 
 networks:
-  internal:
-    name: internal
+  careflow-network:
+    name: careflow-network
     driver: bridge
+
+volumes:
+  patient-service-data:
+    name: careflow-patient-service-data
